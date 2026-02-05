@@ -9,4 +9,4 @@
 # they accept any liabilities with respect to them.
 
 This is an academic project by group G058 for the course Diseño y Pruebas 2, made up of
-Francisco Ayala Díaz, Max Cameron Corti, Javier Luque Ruiz, Ronald Alexander Montoya Albitres and Nicolás Parrilla Geniz.
+five students from the University of Seville.
