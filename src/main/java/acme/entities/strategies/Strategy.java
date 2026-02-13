@@ -4,9 +4,10 @@ package acme.entities.strategies;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.datatypes.Moment;
@@ -50,12 +51,12 @@ public class Strategy extends AbstractEntity {
 
 	@Mandatory
 	@ValidMoment(constraint = Constraint.ENFORCE_FUTURE)
-	@Temporal(TemporalType.TIMESTAMP)
+	//@Temporal(TemporalType.TIMESTAMP)
 	private Moment				startMoment;
 
 	@Mandatory
 	@ValidMoment(constraint = Constraint.ENFORCE_FUTURE)
-	@Temporal(TemporalType.TIMESTAMP)
+	//@Temporal(TemporalType.TIMESTAMP)
 	private Moment				endMoment;
 
 	@Optional
@@ -70,15 +71,30 @@ public class Strategy extends AbstractEntity {
 
 	// Derived attributes -----------------------------------------------------
 
+	@Transient
+	@Autowired
+	private StrategyRepository	repository;
+
 	//public Double getMonthsActive()
 
-	//public Double getExpectedPercentage()
+
+	@Transient
+	public Double getExpectedPercentage() {
+		Double result;
+		Double expectedPercentage;
+
+		expectedPercentage = this.repository.expectedPercentage(this.getId());
+		result = expectedPercentage == null ? 0 : expectedPercentage.doubleValue();
+
+		return result;
+	}
 
 	// Relationships ----------------------------------------------------------
+
 
 	@Mandatory
 	@Valid
 	@ManyToOne
-	private Fundraiser			fundraiser;
+	private Fundraiser fundraiser;
 
 }
