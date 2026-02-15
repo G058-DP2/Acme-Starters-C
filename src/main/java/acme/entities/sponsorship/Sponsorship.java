@@ -1,6 +1,7 @@
 
 package acme.entities.sponsorship;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import javax.persistence.Column;
@@ -15,7 +16,6 @@ import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.basis.AbstractEntity;
-import acme.client.components.datatypes.Moment;
 import acme.client.components.datatypes.Money;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
@@ -60,7 +60,7 @@ public class Sponsorship extends AbstractEntity {
 	@Mandatory
 	@ValidMoment(constraint = Constraint.ENFORCE_FUTURE)
 	@Temporal(TemporalType.TIMESTAMP)
-	private Moment					startMoment;
+	private Date					startMoment;
 
 	/*
 	 * startMoment/endMoment must be a valid time interval in future wrt.
@@ -70,7 +70,7 @@ public class Sponsorship extends AbstractEntity {
 	@Mandatory
 	@ValidMoment(constraint = Constraint.ENFORCE_FUTURE)
 	@Temporal(TemporalType.TIMESTAMP)
-	private Moment					endMoment;
+	private Date					endMoment;
 
 	@Optional
 	@ValidUrl
