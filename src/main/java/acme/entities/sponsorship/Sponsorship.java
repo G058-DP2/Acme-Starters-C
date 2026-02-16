@@ -1,8 +1,8 @@
 
 package acme.entities.sponsorship;
 
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,12 +21,11 @@ import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidMoment.Constraint;
-import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidUrl;
+import acme.client.helpers.MomentHelper;
 import acme.constraints.ValidHeader;
 import acme.constraints.ValidText;
 import acme.constraints.ValidTicker;
-import acme.features.sponsor.sponsorship.SponsorshipRepository;
 import acme.realms.Sponsor;
 import lombok.Getter;
 import lombok.Setter;
@@ -89,32 +88,16 @@ public class Sponsorship extends AbstractEntity {
 	@Autowired
 	private SponsorshipRepository	repository;
 
-	@Mandatory
-	@Valid
+
 	@Transient
-	private Double					monthsActive;
-
-	@Mandatory
-	@ValidMoney(min = 0.0)
-	@Transient
-	private Money					totalMoney;
-
-
 	public Double getMonthsActive() {
 
-		double result = 0.0;
+		long months = MomentHelper.computeDuration(this.startMoment, this.endMoment).get(ChronoUnit.MONTHS);
 
-		if (this.startMoment != null && this.endMoment != null) {
-			long diffInMillies = Math.abs(this.endMoment.getTime() - this.startMoment.getTime());
-			long diffInDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-
-			double months = diffInDays / 30.0;
-			result = Math.round(months * 10.0) / 10.0;
-		}
-
-		return result;
+		return (double) months;
 	}
 
+	@Transient
 	public Money getTotalMoney() {
 
 		Double totalAmount = this.repository.calculateTotalAmountBySponsorshipId(this.getId());
