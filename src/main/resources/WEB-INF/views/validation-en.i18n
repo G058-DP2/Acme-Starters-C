@@ -1,3 +1,8 @@
 acme.validation.text.message   	    = Must have from 1 to 255 characters
 acme.validation.header.message   	= Must have from 1 to 75 characters
-acme.validation.ticker.message 		= The ticker must start with 2 uppercase letters and 2 digits, followed by a hyphen and 5 to 10 alphanumeric characters 
+acme.validation.ticker.message 		= The ticker must start with 2 uppercase letters and 2 digits, followed by a hyphen and 5 to 10 alphanumeric characters
+acme.validation.sponsorship.donations.error = A sponsorship cannot be published unless it has at least one donation.
+acme.validation.sponsorship.dates.error = Start and end moments must form a valid time interval in the future upon publication.
+acme.validation.sponsorship.ticker.non-unique = The ticker is already in use by another sponsorship.
+acme.validation.money.eur.error = The currency must be exclusively EUR.
+acme.validation.money.eur.error = La moneda debe ser exclusivamente EUR. 
