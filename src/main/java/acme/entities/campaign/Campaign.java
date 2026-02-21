@@ -13,26 +13,22 @@
 package acme.entities.campaign;
 
 import java.time.Duration;
-import java.time.Instant;
-import java.util.Collection;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.validation.Mandatory;
-import acme.client.components.validation.ValidMoment;
-import acme.client.components.validation.ValidUrl;
-import acme.constraints.ValidHeader;
-import acme.constraints.ValidText;
-import acme.constraints.ValidTicker;
+import acme.client.helpers.MomentHelper;
 import acme.realms.Spokesperson;
 import lombok.Getter;
 import lombok.Setter;
@@ -49,40 +45,44 @@ public class Campaign extends AbstractEntity {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
-	@ValidTicker
+	// @ValidTicker
 	@Column(unique = true)
 	private String				ticker;
 
 	@Mandatory
-	@ValidHeader
+	// @ValidHeader
 	@Column
 	private String				name;
 
 	@Mandatory
-	@ValidText
+	// @ValidText
 	@Column
 	private String				description;
 
 	@Mandatory
-	@ValidMoment(constraint = ValidMoment.Constraint.ENFORCE_FUTURE)
+	// @ValidMoment(constraint = ValidMoment.Constraint.ENFORCE_FUTURE)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date				startMoment;
 
 	@Mandatory
-	@ValidMoment(constraint = ValidMoment.Constraint.ENFORCE_FUTURE)
+	// @ValidMoment(constraint = ValidMoment.Constraint.ENFORCE_FUTURE)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date				endMoment;
 
-	@ValidUrl
+	// @ValidUrl
 	@Column
 	private String				moreInfo;
 
 	@Mandatory
-	@Valid
+	// @Valid
 	@Column
 	private Boolean				draftMode;
 
 	// Derived attributes -----------------------------------------------------
+
+	@Transient
+	@Autowired
+	private CampaignRepository	repository;
 
 
 	@Transient
@@ -94,30 +94,62 @@ public class Campaign extends AbstractEntity {
 		return Math.round(months * 10.0) / 10.0;
 	}
 
+	//Corregido el effort
 	@Transient
 	public Double getEffort() {
-		if (this.milestones == null)
-			return 0.0;
-
-		return this.milestones.stream().map(Milestone::getEffort).filter(value -> value != null).mapToDouble(Double::doubleValue).sum();
+		if (this.getId() > 0 && this.repository != null) {
+			Double totalEffort = this.repository.calculateTotalEffortByCampaignId(this.getId());
+			return totalEffort != null ? totalEffort : 0.0;
+		}
+		return 0.0;
 	}
+
+	//Anticuada
+	/*
+	 * private double computeMonthsBetween(final Date start, final Date end) {
+	 * Instant startInstant = start.toInstant();
+	 * Instant endInstant = end.toInstant();
+	 * long days = Duration.between(startInstant, endInstant).toDays();
+	 * return days / 30.0;
+	 * }
+	 */
+	//Solucion
 
 	private double computeMonthsBetween(final Date start, final Date end) {
-		Instant startInstant = start.toInstant();
-		Instant endInstant = end.toInstant();
-		long days = Duration.between(startInstant, endInstant).toDays();
-		return days / 30.0;
-	}
+		if (start == null || end == null || !start.before(end))
+			return 0.0;
+		/*
+		 * Si alguna fecha es null o start no es anterior a end, devuelve 0.0.
+		 * Obtiene una zona horaria y convierte fechas
+		 */
+		ZoneId zone = MomentHelper.getCurrentMoment().toInstant().atZone(ZoneId.systemDefault()).getZone();
+		ZonedDateTime cursor = ZonedDateTime.ofInstant(start.toInstant(), zone);
+		ZonedDateTime limit = ZonedDateTime.ofInstant(end.toInstant(), zone);
+		/*
+		 * Usa MomentHelper para tomar la referencia temporal y trabajar con ZonedDateTime (fecha+hora+zona).
+		 */
+		double months = 0.0;
+		while (cursor.isBefore(limit)) {
+			ZonedDateTime nextMonth = cursor.plusMonths(1);
 
+			if (nextMonth.isAfter(limit)) {
+				long elapsedMillis = Duration.between(cursor, limit).toMillis();
+				long monthMillis = Duration.between(cursor, nextMonth).toMillis();
+				months += monthMillis == 0L ? 0.0 : (double) elapsedMillis / monthMillis;
+				break;
+			}
+
+			months += 1.0;
+			cursor = nextMonth;
+		}
+
+		return months;
+	}
 	// Relationships ----------------------------------------------------------
 
 
 	@Mandatory
-	@Valid
+	// @Valid
 	@ManyToOne(optional = false)
-	private Spokesperson			manager;
-
-	@Valid
-	@OneToMany(mappedBy = "campaign")
-	private Collection<Milestone>	milestones;
+	private Spokesperson manager;
 }
