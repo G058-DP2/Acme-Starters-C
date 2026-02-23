@@ -12,9 +12,7 @@
 
 package acme.entities.campaign;
 
-import java.time.Duration;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -87,14 +85,9 @@ public class Campaign extends AbstractEntity {
 
 	@Transient
 	public Double getMonthsActive() {
-		if (this.startMoment == null || this.endMoment == null)
-			return null;
-
-		double months = this.computeMonthsBetween(this.startMoment, this.endMoment);
-		return Math.round(months * 10.0) / 10.0;
+		return (double) MomentHelper.computeDuration(this.startMoment, this.endMoment).get(ChronoUnit.MONTHS);
 	}
 
-	//Corregido el effort
 	@Transient
 	public Double getEffort() {
 		if (this.getId() > 0 && this.repository != null) {
@@ -104,47 +97,6 @@ public class Campaign extends AbstractEntity {
 		return 0.0;
 	}
 
-	//Anticuada
-	/*
-	 * private double computeMonthsBetween(final Date start, final Date end) {
-	 * Instant startInstant = start.toInstant();
-	 * Instant endInstant = end.toInstant();
-	 * long days = Duration.between(startInstant, endInstant).toDays();
-	 * return days / 30.0;
-	 * }
-	 */
-	//Solucion
-
-	private double computeMonthsBetween(final Date start, final Date end) {
-		if (start == null || end == null || !start.before(end))
-			return 0.0;
-		/*
-		 * Si alguna fecha es null o start no es anterior a end, devuelve 0.0.
-		 * Obtiene una zona horaria y convierte fechas
-		 */
-		ZoneId zone = MomentHelper.getCurrentMoment().toInstant().atZone(ZoneId.systemDefault()).getZone();
-		ZonedDateTime cursor = ZonedDateTime.ofInstant(start.toInstant(), zone);
-		ZonedDateTime limit = ZonedDateTime.ofInstant(end.toInstant(), zone);
-		/*
-		 * Usa MomentHelper para tomar la referencia temporal y trabajar con ZonedDateTime (fecha+hora+zona).
-		 */
-		double months = 0.0;
-		while (cursor.isBefore(limit)) {
-			ZonedDateTime nextMonth = cursor.plusMonths(1);
-
-			if (nextMonth.isAfter(limit)) {
-				long elapsedMillis = Duration.between(cursor, limit).toMillis();
-				long monthMillis = Duration.between(cursor, nextMonth).toMillis();
-				months += monthMillis == 0L ? 0.0 : (double) elapsedMillis / monthMillis;
-				break;
-			}
-
-			months += 1.0;
-			cursor = nextMonth;
-		}
-
-		return months;
-	}
 	// Relationships ----------------------------------------------------------
 
 
