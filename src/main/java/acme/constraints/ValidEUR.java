@@ -8,21 +8,15 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import javax.validation.ReportAsSingleViolation;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
-@Target(ElementType.FIELD)
+@Target({
+	ElementType.FIELD, ElementType.METHOD
+})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {})
-@ReportAsSingleViolation
+@Constraint(validatedBy = EURCurrencyValidator.class)
+public @interface ValidEUR {
 
-@NotBlank
-@Pattern(regexp = "^[A-Z]{2}\\d{2}-\\w{5,10}$")
-
-public @interface ValidTicker {
-
-	String message() default "{acme.validation.ticker.message}";
+	String message() default "";
 
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
