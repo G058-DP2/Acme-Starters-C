@@ -10,7 +10,8 @@ import javax.validation.constraints.NotNull;
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.datatypes.Money;
 import acme.client.components.validation.Mandatory;
-import acme.constraints.ValidEUR;
+import acme.client.components.validation.ValidMoney;
+import acme.constraints.ValidDonation;
 import acme.constraints.ValidHeader;
 import acme.constraints.ValidText;
 import lombok.Getter;
@@ -19,6 +20,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@ValidDonation
 public class Donation extends AbstractEntity {
 
 	// Serialisation version --------------------------------------------------
@@ -38,7 +40,7 @@ public class Donation extends AbstractEntity {
 	private String				notes;
 
 	@Mandatory
-	@ValidEUR(min = 0.0)
+	@ValidMoney
 	@Column
 	private Money				money;
 
