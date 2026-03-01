@@ -12,6 +12,7 @@
 
 package acme.entities.campaign;
 
+import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
@@ -95,7 +96,8 @@ public class Campaign extends AbstractEntity {
 
 	@Transient
 	public Double getMonthsActive() {
-		return (double) MomentHelper.computeDuration(this.startMoment, this.endMoment).get(ChronoUnit.MONTHS);
+		Duration d = MomentHelper.computeDuration(this.startMoment, this.endMoment);
+		return (double) d.get(ChronoUnit.MONTHS);
 	}
 
 	@Transient
