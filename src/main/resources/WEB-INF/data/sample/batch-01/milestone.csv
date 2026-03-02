@@ -2,8 +2,8 @@ key,key:campaign,title,achievements,effort,kind
 #base - entity
 milestone-01,campaign-35,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",10,TEASER
 #campaign - standar
-milestone-28,campaign-01,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",10,TEASER
-milestone-29,campaign-02,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",10,TEASER
+milestone-32,campaign-01,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",10,TEASER
+milestone-33,campaign-02,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",10,TEASER
 #title - standar
 milestone-02,campaign-35,L,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",10,TEASER
 milestone-03,campaign-35,Lo,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",10,TEASER
@@ -29,8 +29,14 @@ milestone-21,campaign-35,"Lorem ipsum dolor sit amet, consectetu",' or 'A' = 'A,
 #effort - standar
 milestone-22,campaign-35,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",0.00,TEASER
 milestone-23,campaign-35,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",0.01,TEASER
-milestone-24,campaign-35,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",9999.99,TEASER
-milestone-25,campaign-35,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",9999.98,TEASER
+milestone-24,campaign-35,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",99999.99,TEASER
+milestone-25,campaign-35,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",99999.98,TEASER
 #kind - standar
 milestone-26,campaign-35,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",10,ENGAGING
 milestone-27,campaign-35,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",10,CONVERSION
+#For campaign positive tests
+milestone-28,campaign-19,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",10,TEASER
+milestone-29,campaign-20,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",10,TEASER
+milestone-30,campaign-23,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",10,TEASER
+milestone-31,campaign-24,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",10,TEASER
+
