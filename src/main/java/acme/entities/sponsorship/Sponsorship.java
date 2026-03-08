@@ -20,7 +20,8 @@ import acme.client.components.datatypes.Money;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
-import acme.client.components.validation.ValidMoment.Constraint;
+import acme.client.components.validation.ValidMoney;
+import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidUrl;
 import acme.client.helpers.MomentHelper;
 import acme.constraints.ValidHeader;
@@ -59,7 +60,7 @@ public class Sponsorship extends AbstractEntity {
 	private String					description;
 
 	@Mandatory
-	@ValidMoment(constraint = Constraint.ENFORCE_FUTURE)
+	@ValidMoment
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date					startMoment;
 
@@ -69,7 +70,7 @@ public class Sponsorship extends AbstractEntity {
 	 */
 
 	@Mandatory
-	@ValidMoment(constraint = Constraint.ENFORCE_FUTURE)
+	@ValidMoment
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date					endMoment;
 
@@ -91,14 +92,21 @@ public class Sponsorship extends AbstractEntity {
 	private SponsorshipRepository	repository;
 
 
+	@Mandatory
+	@ValidNumber
 	@Transient
 	public Double getMonthsActive() {
 
-		long months = MomentHelper.computeDuration(this.startMoment, this.endMoment).get(ChronoUnit.MONTHS);
+		if (this.startMoment == null || this.endMoment == null)
+			return null;
 
-		return (double) months;
+		Double months = MomentHelper.computeDifference(this.startMoment, this.endMoment, ChronoUnit.MONTHS);
+
+		return Math.round(months * 100.0) / 100.0;
 	}
 
+	@Mandatory
+	@ValidMoney
 	@Transient
 	public Money getTotalMoney() {
 

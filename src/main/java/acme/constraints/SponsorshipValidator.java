@@ -48,11 +48,10 @@ public class SponsorshipValidator extends AbstractValidator<ValidSponsorship, Sp
 
 			super.state(context, hasDonations, "draftMode", "acme.validation.sponsorship.donations.error");
 
-			Date now = MomentHelper.getBaseMoment();
 			Date start = sponsorship.getStartMoment();
 			Date end = sponsorship.getEndMoment();
 
-			boolean validDates = start != null && end != null && !start.before(now) && end.after(start);
+			boolean validDates = start != null && end != null && MomentHelper.isAfter(end, start);
 
 			super.state(context, validDates, "startMoment", "acme.validation.sponsorship.dates.error");
 		}

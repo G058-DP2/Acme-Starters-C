@@ -18,10 +18,11 @@ import acme.client.components.basis.AbstractEntity;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
-import acme.client.components.validation.ValidMoment.Constraint;
+import acme.client.components.validation.ValidScore;
 import acme.client.components.validation.ValidUrl;
 import acme.client.helpers.MomentHelper;
 import acme.constraints.ValidHeader;
+import acme.constraints.ValidStrategy;
 import acme.constraints.ValidText;
 import acme.constraints.ValidTicker;
 import acme.realms.Fundraiser;
@@ -31,6 +32,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@ValidStrategy
 public class Strategy extends AbstractEntity {
 
 	// Serialisation version --------------------------------------------------
@@ -55,12 +57,12 @@ public class Strategy extends AbstractEntity {
 	private String				description;
 
 	@Mandatory
-	@ValidMoment(constraint = Constraint.ENFORCE_FUTURE)
+	@ValidMoment
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date				startMoment;
 
 	@Mandatory
-	@ValidMoment(constraint = Constraint.ENFORCE_FUTURE)
+	@ValidMoment
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date				endMoment;
 
@@ -81,12 +83,20 @@ public class Strategy extends AbstractEntity {
 	private StrategyRepository	repository;
 
 
+	@Mandatory
+	@Valid
 	@Transient
 	public Double getMonthsActive() {
-		return (double) MomentHelper.computeDuration(this.startMoment, this.endMoment).get(ChronoUnit.MONTHS);
+		if (this.startMoment == null || this.endMoment == null)
+			return null;
+
+		Double months = MomentHelper.computeDifference(this.startMoment, this.endMoment, ChronoUnit.MONTHS);
+
+		return Math.round(months * 100.0) / 100.0;
 	}
 
-	@Valid
+	@Mandatory
+	@ValidScore
 	@Transient
 	public Double getExpectedPercentage() {
 		Double result;
@@ -95,7 +105,8 @@ public class Strategy extends AbstractEntity {
 		expectedPercentage = this.repository.expectedPercentage(this.getId());
 		result = expectedPercentage == null ? 0 : expectedPercentage.doubleValue();
 
-		return result;
+		return (double) (Math.round(result * 100) / 100);
+
 	}
 
 	// Relationships ----------------------------------------------------------

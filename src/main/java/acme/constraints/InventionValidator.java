@@ -38,14 +38,17 @@ public class InventionValidator extends AbstractValidator<ValidInvention, Invent
 			return true;
 		else {
 			{
-				Invention existingInvention = this.inventionRepository.findInventionByTicker(invention.getTicker());
-				boolean uniqueInvention = existingInvention != null && existingInvention.equals(invention);
+				boolean uniqueInvention;
+				Invention existingInvention;
+
+				existingInvention = this.inventionRepository.findInventionByTicker(invention.getTicker());
+				uniqueInvention = existingInvention == null || existingInvention.equals(invention);
 
 				super.state(context, uniqueInvention, "ticker", "acme.validation.invention.ticker.non-unique");
 
 			}
 			{
-				if (invention.getDraftMode() != null && !invention.getDraftMode()) {
+				if (!invention.isDraftMode()) {
 					Integer partsCount = this.partRepository.countPartsByInventionId(invention.getId());
 					boolean hasParts = partsCount != null && partsCount > 0;
 
@@ -53,16 +56,19 @@ public class InventionValidator extends AbstractValidator<ValidInvention, Invent
 				}
 			}
 			{
-				Date now = MomentHelper.getBaseMoment();
 				Date start = invention.getStartMoment();
 				Date end = invention.getEndMoment();
-				boolean validDates = start != null && end != null && !start.before(now) && end.after(start);
 
-				boolean validPublishedInvention = invention.getDraftMode() || validDates;
+				boolean validDates = invention.isDraftMode() || MomentHelper.isBefore(start, end);
+				super.state(context, validDates, "endMoment", "acme.validation.invention.dates.error");
 
-				super.state(context, validPublishedInvention, "*", "acme.validation.invention.dates.error");
+				/*
+				 * boolean datesInFuture = start != null && end != null && MomentHelper.isFuture(start) && MomentHelper.isFuture(end);
+				 * 
+				 * boolean validPublishedInvention = invention.getDraftMode() || datesInFuture;
+				 * super.state(context, validPublishedInvention, "startMoment", "acme.validation.invention.dates.error-publish");
+				 */
 			}
-
 		}
 
 		return !super.hasErrors(context);
