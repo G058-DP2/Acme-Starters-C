@@ -7,6 +7,7 @@ import org.checkerframework.common.util.report.qual.ReportCreation;
 import org.springframework.data.jpa.repository.Query;
 
 import acme.client.repositories.AbstractRepository;
+import acme.entities.strategies.Strategy;
 import acme.entities.strategies.Tactic;
 
 @ReportCreation
@@ -17,5 +18,8 @@ public interface AnyTacticRepository extends AbstractRepository {
 
 	@Query("select t from Tactic t where t.id = :id")
 	Tactic findTacticById(int id);
+
+	@Query("select s from Strategy s where s.id = :id")
+	Strategy findStrategyById(int id);
 
 }
