@@ -24,6 +24,8 @@
 		
 		<acme:menu-option code="master.menu.any" access="isAuthenticated()">
 			<acme:menu-suboption code="master.menu.any.list-sponsorships" action="/any/sponsorship/list"/>
+			
+			<acme:menu-suboption code="master.menu.any.list-auditReports" action="/any/auditReport/list"/>
 		</acme:menu-option>
 
 		<acme:menu-option code="master.menu.administrator" access="hasRealm('Administrator')">

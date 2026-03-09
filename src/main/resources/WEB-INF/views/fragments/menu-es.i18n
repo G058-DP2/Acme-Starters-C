@@ -18,6 +18,8 @@ master.menu.anonymous.favourite-link = Enlace favorito
 master.menu.any = Autenticado
 master.menu.any.list-sponsorships = Listar patrocinios
 
+master.menu.any.list-auditReports = Listar informes de auditoria
+
 # master.menu.administrator ###################################################
 
 master.menu.administrator = Administrador
