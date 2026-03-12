@@ -26,6 +26,10 @@
     		<acme:menu-suboption code="master.menu.sponsor.list-my-sponsorships" action="/sponsor/sponsorship/list"/>
 		</acme:menu-option>
 		
+		<acme:menu-option code="master.menu.spokesperson" access="hasRealm('Spokesperson')">
+    		<acme:menu-suboption code="master.menu.spokesperson.list-my-campaigns" action="/spokesperson/campaign/list"/>
+		</acme:menu-option>
+		
 		<acme:menu-option code="master.menu.any">		
 			<acme:menu-suboption code="master.menu.any.list-inventions" action="/any/invention/list"/>
       <acme:menu-suboption code="master.menu.any.list-campaigns" action="/any/campaign/list"/>
@@ -61,6 +65,8 @@
 			<acme:menu-suboption code="master.menu.user-account.consumer-profile" action="/authenticated/consumer/update" access="hasRealm('Consumer')"/>
 			<acme:menu-suboption code="master.menu.user-account.become-sponsor" action="/authenticated/sponsor/create" access="!hasRealm('Sponsor')"/>
 			<acme:menu-suboption code="master.menu.user-account.sponsor-profile" action="/authenticated/sponsor/update" access="hasRealm('Sponsor')"/>
+			<acme:menu-suboption code="master.menu.user-account.become-spokesperson" action="/authenticated/spokesperson/create" access="!hasRealm('Spokesperson')"/>
+			<acme:menu-suboption code="master.menu.user-account.spokesperson-profile" action="/authenticated/spokesperson/update" access="hasRealm('Spokesperson')"/>
 		</acme:menu-option>
 	</acme:menu-right>
 </acme:menu-bar>
