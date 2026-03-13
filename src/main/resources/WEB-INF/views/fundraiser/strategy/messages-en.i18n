@@ -18,3 +18,7 @@ fundraiser.strategy.form.label.monthsActive = Months active:
 fundraiser.strategy.form.label.expectedPercentage   = Expected Percentage:
 
 fundraiser.strategy.form.button.delete = Delete
+fundraiser.strategy.form.button.update = Update
+fundraiser.strategy.form.button.create = Create
+fundraiser.strategy.form.button.publish = Publish
+fundraiser.strategy.list.button.create = Create Strategy

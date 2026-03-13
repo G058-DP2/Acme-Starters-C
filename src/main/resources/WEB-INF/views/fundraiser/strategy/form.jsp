@@ -15,7 +15,12 @@
 
 	<jstl:choose>
 		<jstl:when test="${acme:anyOf(_command, 'show|update|delete|publish') && draftMode == true}">
+			<acme:submit code="fundraiser.strategy.form.button.update" action="/fundraiser/strategy/update"/>
 			<acme:submit code="fundraiser.strategy.form.button.delete" action="/fundraiser/strategy/delete"/>
+			<acme:submit code="fundraiser.strategy.form.button.publish" action="/fundraiser/strategy/publish"/>
+		</jstl:when>
+		<jstl:when test="${_command == 'create' }">
+			<acme:submit code="fundraiser.strategy.form.button.create" action="/fundraiser/strategy/create"/>
 		</jstl:when>
 	</jstl:choose>
 	
