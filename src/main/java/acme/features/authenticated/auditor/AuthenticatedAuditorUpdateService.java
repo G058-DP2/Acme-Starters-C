@@ -60,8 +60,8 @@ public class AuthenticatedAuditorUpdateService extends AbstractService<Authentic
 		SelectChoices result;
 
 		result = new SelectChoices();
-		result.add("false", "authenticated.Auditor.form.value.false", Boolean.FALSE.equals(selected));
-		result.add("true", "authenticated.Auditor.form.value.true", Boolean.TRUE.equals(selected));
+		result.add("false", "authenticated.auditor.form.value.false", Boolean.FALSE.equals(selected));
+		result.add("true", "authenticated.auditor.form.value.true", Boolean.TRUE.equals(selected));
 
 		return result;
 	}
