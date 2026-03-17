@@ -6,7 +6,7 @@
 <acme:form>
 	<acme:form-textbox  code="spokesperson.milestone.form.label.title"  path="title"/>
 	<acme:form-textarea code="spokesperson.milestone.form.label.achievements" path="achievements"/>
-	<acme:form-money    code="spokesperson.milestone.form.label.effort" path="effort"/>
+	<acme:form-double    code="spokesperson.milestone.form.label.effort" path="effort"/>
 	<acme:form-select   code="spokesperson.milestone.form.label.kind"  path="kind" choices="${kinds}"/>
 
 	<jstl:choose>
