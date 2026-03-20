@@ -70,7 +70,7 @@ public class SpokespersonCampaignPublishService extends AbstractService<Spokespe
 			start = this.campaign.getStartMoment();
 			end = this.campaign.getEndMoment();
 			validInterval = start != null && end != null && MomentHelper.isAfter(end, start);
-			super.state(validInterval, "startMoment", "acme.validation.campaign.dates.error");
+			super.state(validInterval, "startMoment", "acme.validation.campaign.dates.error-publish");
 		}
 
 		{

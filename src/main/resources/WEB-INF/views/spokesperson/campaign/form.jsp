@@ -11,7 +11,7 @@
 	<acme:form-moment   code="spokesperson.campaign.form.label.endMoment"    path="endMoment"/>
 	<acme:form-url      code="spokesperson.campaign.form.label.moreInfo"     path="moreInfo"/>
 	<acme:form-double   code="spokesperson.campaign.form.label.monthsActive" path="monthsActive" readonly="true"/>
-	<acme:form-money    code="spokesperson.campaign.form.label.effort"   path="effort"   readonly="true"/>
+	<acme:form-double    code="spokesperson.campaign.form.label.effort"   path="effort"   readonly="true"/>
 
 	<jstl:choose>
 		<jstl:when test="${_command == 'show' && draftMode == false}">
